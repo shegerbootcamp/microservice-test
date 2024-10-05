@@ -3,17 +3,21 @@ pipeline {
 
     stages {
         stage('Install Dependencies') {
+           dir('microservice-a') { 
             steps {
                 echo 'Installing dependencies for Microservice A'
                 sh 'pip install -r requirements.txt'
             }
+           }
         }
 
         stage('Run Microservice A') {
+           dir('microservice-a') { 
             steps {
                 echo 'Running Microservice A'
                 sh 'python app_a.py &'
             }
+           }
         }
     }
 }
