@@ -2,17 +2,31 @@ pipeline {
     agent any
 
     stages {
-        stage('Install Dependencies') {
+        stage('Check Environment') {
             steps {
-                echo 'Installing dependencies for Microservice B'
-                sh 'pip install -r requirements.txt'
+               dir('microservice-b') { 
+                echo 'Checking Python and pip versions...'
+                sh 'python3 --version'
+                sh 'pip --version'
+               }
             }
         }
 
-        stage('Run Microservice B') {
+        stage('Install Dependencies') {
             steps {
-                echo 'Running Microservice B'
-                sh 'python app_b.py &'
+               dir('microservice-b') { 
+                echo 'Installing dependencies for Microservice A'
+                sh 'pip install -r requirements.txt'
+               }
+            }
+        }
+
+        stage('Run Microservice A') {
+            steps {
+               dir('microservice-b') { 
+                echo 'Running Microservice A'
+                sh 'python3 app_a.py &'
+               }
             }
         }
     }
