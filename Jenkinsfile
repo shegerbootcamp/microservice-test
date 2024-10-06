@@ -5,14 +5,14 @@ pipeline {
         stage('Run Microservice A') {
             steps {
                 echo 'Triggering Microservice A Jenkins Job'
-                build job: '/microservice-a-job', wait: true
+                build job: '/Cloud-Sheger-Modules/Packages/microservice-a-job', wait: true
             }
         }
 
         stage('Run Microservice B') {
             steps {
                 echo 'Triggering Microservice B Jenkins Job'
-                build job: '/microservice-b-job', wait: true
+                build job: '/Cloud-Sheger-Modules/Packages/microservice-b-job', wait: true
             }
         }
     }
