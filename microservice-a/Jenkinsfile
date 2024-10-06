@@ -4,23 +4,29 @@ pipeline {
     stages {
         stage('Check Environment') {
             steps {
+               dir('microservice-a') { 
                 echo 'Checking Python and pip versions...'
                 sh 'python --version'
                 sh 'pip --version'
+               }
             }
         }
 
         stage('Install Dependencies') {
             steps {
+               dir('microservice-a') { 
                 echo 'Installing dependencies for Microservice A'
                 sh 'pip install -r microservice-a/requirements.txt'
+               }
             }
         }
 
         stage('Run Microservice A') {
             steps {
+               dir('microservice-a') { 
                 echo 'Running Microservice A'
                 sh 'python microservice-a/app_a.py &'
+               }
             }
         }
     }
