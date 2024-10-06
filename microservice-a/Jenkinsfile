@@ -25,7 +25,7 @@ pipeline {
             steps {
                dir('microservice-a') { 
                 echo 'Running Microservice A'
-                sh 'python app_a.py &'
+                sh 'python3 app_a.py &'
                }
             }
         }
