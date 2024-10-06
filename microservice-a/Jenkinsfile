@@ -6,7 +6,7 @@ pipeline {
             steps {
                dir('microservice-a') { 
                 echo 'Checking Python and pip versions...'
-                sh 'python --version'
+                sh 'python3 --version'
                 sh 'pip --version'
                }
             }
