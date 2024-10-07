@@ -7,10 +7,15 @@ pipeline {
                 script {
                     echo 'Triggering Microservice A Jenkins Job'
                     try {
-                        build job: '/Cloud-Sheger-Modules/Packages/microservice-a-job', wait: true
+                        def jobA = '/Cloud-Sheger-Modules/Packages/microservice-a-job'
+                        if (Jenkins.instance.getItemByFullName(jobA)) {
+                            build job: jobA, wait: true
+                        } else {
+                            error("Error: Microservice A job not found at path '${jobA}'")
+                        }
                     } catch (Exception e) {
-                        echo "Error: Microservice A job not found or failed - ${e.message}"
-                        error("Microservice A job failed or not found, aborting pipeline.")
+                        echo "Error: Microservice A job failed - ${e.message}"
+                        error("Microservice A job failed, aborting pipeline.")
                     }
                 }
             }
@@ -21,10 +26,15 @@ pipeline {
                 script {
                     echo 'Triggering Microservice B Jenkins Job'
                     try {
-                        build job: '/Cloud-Sheger-Modules/Packages/microservice-b-job', wait: true
+                        def jobB = '/Cloud-Sheger-Modules/Packages/microservice-b-job'
+                        if (Jenkins.instance.getItemByFullName(jobB)) {
+                            build job: jobB, wait: true
+                        } else {
+                            error("Error: Microservice B job not found at path '${jobB}'")
+                        }
                     } catch (Exception e) {
-                        echo "Error: Microservice B job not found or failed - ${e.message}"
-                        error("Microservice B job failed or not found, aborting pipeline.")
+                        echo "Error: Microservice B job failed - ${e.message}"
+                        error("Microservice B job failed, aborting pipeline.")
                     }
                 }
             }
