@@ -25,7 +25,7 @@ pipeline {
                             def branchNameB = env.BRANCH_NAME.replace("/", "%2F")
                             echo "Branch name for Microservice B: ${branchNameB}"
                             retry(3) {
-                                build job: "/job/Cloud-Sheger-Modules/job/Packages/job/microservice-b-job/job/main", wait: true
+                                build job: "../../Packages/microservice-b-job/${branchNameB}", wait: true
                             }
                         }
                     }
