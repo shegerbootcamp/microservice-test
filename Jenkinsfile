@@ -10,8 +10,8 @@ pipeline {
                         echo 'Triggering Microservice A Jenkins Job'
                         // Handle branch name with slashes
                         script {
-                            def branchNameA = env.BRANCH_NAME.replace("/", "%2F")
-                            build job: "/Cloud-Sheger-Modules/Packages/microservice-a-job/${branchNameA}", wait: true
+                           // def branchNameA = env.BRANCH_NAME.replace("/", "%2F")
+                            build job: "../Packages/microservice-a-job", wait: true
                         }
                     }
                 }
@@ -22,7 +22,7 @@ pipeline {
                         // Handle branch name with slashes
                         script {
                             def branchNameB = env.BRANCH_NAME.replace("/", "%2F")
-                            build job: "/Cloud-Sheger-Modules/Packages/microservice-b-job/${branchNameB}", wait: true
+                            build job: "../Packages/microservice-b-job/${branchNameB}", wait: true
                         }
                     }
                 }
