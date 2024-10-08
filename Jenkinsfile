@@ -2,29 +2,28 @@ pipeline {
     agent any
 
     stages {
-        stage('Run Microservice A') {
-            steps {
-                script {
-                    echo 'Triggering Microservice A Jenkins Job'
-                    try {
-                        build job: '/Cloud-Sheger-Modules/Packages/microservice-a-job', wait: true
-                    } catch (Exception e) {
-                        echo "Error: Microservice A job not found or failed - ${e.message}"
-                        error("Microservice A job failed or not found, aborting pipeline.")
+        stage('Run Microservice Jobs') {
+            failFast true
+            parallel {
+                stage('Run Microservice A') {
+                    steps {
+                        echo 'Triggering Microservice A Jenkins Job'
+                        // Handle branch name with slashes
+                        script {
+                            def branchNameA = env.BRANCH_NAME.replace("/", "%2F")
+                            build job: "/Cloud-Sheger-Modules/Packages/microservice-a-job/${branchNameA}", wait: true
+                        }
                     }
                 }
-            }
-        }
 
-        stage('Run Microservice B') {
-            steps {
-                script {
-                    echo 'Triggering Microservice B Jenkins Job'
-                    try {
-                        build job: '/Cloud-Sheger-Modules/Packages/microservice-b-job', wait: true
-                    } catch (Exception e) {
-                        echo "Error: Microservice B job not found or failed - ${e.message}"
-                        error("Microservice B job failed or not found, aborting pipeline.")
+                stage('Run Microservice B') {
+                    steps {
+                        echo 'Triggering Microservice B Jenkins Job'
+                        // Handle branch name with slashes
+                        script {
+                            def branchNameB = env.BRANCH_NAME.replace("/", "%2F")
+                            build job: "/Cloud-Sheger-Modules/Packages/microservice-b-job/${branchNameB}", wait: true
+                        }
                     }
                 }
             }
